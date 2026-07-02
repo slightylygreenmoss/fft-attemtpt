@@ -7,37 +7,41 @@
 #define e  2.718281828459045235360287471352
 //im probably not going to use these macros
 
-struct num{
+typedef struct{
 	long double re;
 	long double im;
-};
+}cnum;
 
-struct num* createnum(long double real, long double imaginary){
-	struct num* temp= calloc(1,sizeof(struct num));
-	temp->re=real;
-	temp->im=imaginary;
+cnum* createnum(long double re, long double im){
+	cnum* temp= calloc(1,sizeof(struct num));
+	temp->re=re;
+	temp->im=im;//discovered imaginary is a predefined keyword
 	return temp;
 }
 
-struct num* addstuff(struct num* a, struct num* b){
+cnum* addstuff(cnum* a, cnum* b){
 	//wanna see some crazy shit?
+	//a+ib + c+id = a+b +i(b+d) nothign complicated
 	return createnum(a->re+b->re,a->im+b->im);
 	//isnt that some crazy optimal code or what its one line ugh tis cool
 }
 
-struct num* multiply(struct num* a, struct num* b){
+cnum* multiply(cnum* a, cnum* b){
+	//its (a+ib)*(c+id)=(ac-bd)+i(ad+bc)
+	//very fun very nice
 	return createnum((a->re*b->re)-(a->im*b->im),(a->re*b->im)+(a->im*b->re));//oh and she does it again ugh! yeah!
 }
 
-long double CTA(n){
+long double CosTA(n){
 //cosine taylor approximation
 
 }
 
-struct num* nthRootOfUnityGenerator(long long n){
+cnum* nthRootOfUnityGenerator(long long n){
 //penis
 //e^i2pi/n = cos 2pi/n + i sin 2pi/n
-//however we will pass n as an argument call by value, and the function will return the trig funcs in terms of 2pi/n
+//however when calling sin and cos funcs DO NOT WRITE 2pi/n.
+//WRITE cos(n) instead of cos(2pi/n) 
 struct num e={CTA(n),}
 
 }
@@ -46,9 +50,10 @@ long long arraySizeDeterminer(int* array){
 	long long size = sizeof(array)/sizeof(int);
 	long long n=1;//loooong loooong maaaaaaaaan
 	while(pow(2,n)<=size){
+		//TO DO: replace pow with your own exponentiation function
 		n++;
 	}	
-	n=pow(2,n); // i am the senate
+	n=pow(2,n); // i am the senate, just reusing variables
 	return n;//and not another word just lalalalalala
 }
 
@@ -58,7 +63,7 @@ int* fft(int* coefficients){
 	if(n==1){
 		return coefficients;
 	}
-struct num valatpos= nthRootOfUnityGenerator(n);
+cnum nthroot = nthRootOfUnityGenerator(n);
 long i = 0x5f3759df - (i >> 1);  // what the fuck? //there is no reason for this to be here other than that i wanted it here, its here to bring the average grade of the code up to a C from a D its clearly at.
 
 return 
